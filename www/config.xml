@@ -10,10 +10,10 @@
     <gap:splash src="splash.png" />
     <preference name="splash-screen-duration" value="5000" />
     <icon src="icon.png" />
-    <name>Canvas Test</name>
+    <name>Kufungua</name>
 
     <description>
-        PhoneGap Canvas Tests
+      Kufungua
     </description>
 
     <author href="http://www.takkaproducitons.co.uk" email="pete.cleary@gmail.com">
