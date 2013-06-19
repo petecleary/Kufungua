@@ -43,7 +43,7 @@ var kufungua = function () {
         base_image.src = 'splash.png';
         base_image.onload = function () {
             ctx.drawImage(base_image, 0, 0, W, H);
-            nowPlaying = setInterval(render, intSpeed);
+            nowPlaying = setInterval(render, 33);
         }
     }
 
@@ -328,6 +328,7 @@ var kufungua = function () {
         this.radius = (typeof (radius) != "number") ? 20.0 : radius;
         this.numberOfVertexes = 0;
 
+        var drawPointNow = true;
         // Ciclo da 0ø a 360ø con passo di 10ø...calcola la circonf. di mezzo
         for (alpha = 0; alpha <= 6.28; alpha += 0.17) {
             p = this.point[this.numberOfVertexes] = new Point3D();
@@ -335,7 +336,8 @@ var kufungua = function () {
             p.x = Math.cos(alpha) * this.radius;
             p.y = 0;
             p.z = Math.sin(alpha) * this.radius;
-
+            p.display = drawPointNow;
+            drawPointNow = !drawPointNow;
             this.numberOfVertexes++;
         }
 
@@ -413,13 +415,15 @@ var kufungua = function () {
 
             if ((x >= 0) && (x < width)) {
                 if ((y >= 0) && (y < height)) {
-                    if (touching && x.toFixed(0) > mouse.x && x.toFixed(0) < mouse.x + 20 && y.toFixed(0) > mouse.y && y.toFixed(0) < mouse.y + 20) {
-                        sphere.point[i].selected = !sphere.point[i].selected;
-                    }
-                    if (p.z < 0) {
-                        drawPoint(ctx, x, y, 4, sphere.point[i].color());
-                    } else {
-                        drawPointWithGradient(ctx, x, y, 10, sphere.point[i].gradient(), 0.8);
+                    if (sphere.point[i].display) {
+                        if (touching && x.toFixed(0) > mouse.x && x.toFixed(0) < mouse.x + 20 && y.toFixed(0) > mouse.y && y.toFixed(0) < mouse.y + 20) {
+                            sphere.point[i].selected = !sphere.point[i].selected;
+                        }
+                        if (p.z < 0) {
+                            drawPoint(ctx, x, y, 4, sphere.point[i].color());
+                        } else {
+                            drawPointWithGradient(ctx, x, y, 10, sphere.point[i].gradient(), 0.8);
+                        }
                     }
                 }
             }
